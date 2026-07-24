@@ -110,7 +110,7 @@ export class AboutPage {
   constructor() {
     inject(SeoService).update({
       title: '关于我',
-      description: '关于李向东：关注可靠系统、开发体验、云平台与可复用知识的软件工程师。',
+      description: '关于李相东：关注可靠系统、开发体验、云平台与可复用知识的软件工程师。',
       path: '/about/',
       structuredData: {
         '@context': 'https://schema.org',

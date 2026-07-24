@@ -4,7 +4,7 @@ export const SITE_CONFIG = {
   "name": "向东实验室",
   "shortName": "XD Lab",
   "author": "Xiangdong Li",
-  "displayName": "李向东",
+  "displayName": "李相东",
   "role": "Software Engineer",
   "description": "记录软件工程、云原生与 AI 实践的个人空间。",
   "siteUrl": "https://lixiangdong122333.github.io",

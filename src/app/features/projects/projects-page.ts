@@ -37,7 +37,7 @@ export class ProjectsPage {
     inject(SeoService).update({
       title: 'GitHub 项目',
       description:
-        '李向东的公开项目：云日志 MCP Server、GPU 群集模拟、FXGL 游戏机制原型与流媒体部署配置。',
+        '李相东的公开项目：云日志 MCP Server、GPU 群集模拟、FXGL 游戏机制原型与流媒体部署配置。',
       path: '/projects/',
     });
   }
