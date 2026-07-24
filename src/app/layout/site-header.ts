@@ -32,7 +32,7 @@ interface NavigationItem {
             ngSrc="images/profile.png"
             width="40"
             height="40"
-            alt="向东实验室标志"
+            alt="相东实验室标志"
             class="size-10 rounded-lg"
             priority
           />

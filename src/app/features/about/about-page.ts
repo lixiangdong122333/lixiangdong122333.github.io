@@ -29,7 +29,7 @@ import { PageIntro } from '../../shared/page-intro/page-intro';
             ngSrc="images/profile.png"
             width="420"
             height="420"
-            alt="向东实验室标志"
+            alt="相东实验室标志"
             class="aspect-square w-full max-w-80 rounded-lg object-cover"
             priority
           />

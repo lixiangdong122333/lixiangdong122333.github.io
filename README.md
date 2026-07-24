@@ -1,6 +1,6 @@
-# 向东实验室
+# 相东实验室
 
-向东实验室是一个以 Markdown 为内容源的个人主页，集中展示技术文章、知识笔记、GitHub 项目与可交互实验。项目使用 Angular 的 SSR、SSG 与 Hydration 能力，在保留 Node 服务端部署能力的同时，为 GitHub Pages 生成可直接托管的静态站点。
+相东实验室是一个以 Markdown 为内容源的个人主页，集中展示技术文章、知识笔记、GitHub 项目与可交互实验。项目使用 Angular 的 SSR、SSG 与 Hydration 能力，在保留 Node 服务端部署能力的同时，为 GitHub Pages 生成可直接托管的静态站点。
 
 ## 技术栈
 

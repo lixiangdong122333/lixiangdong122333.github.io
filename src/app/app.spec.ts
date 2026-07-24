@@ -21,7 +21,7 @@ describe('App', () => {
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('header')).toBeTruthy();
-    expect(compiled.querySelector('footer')?.textContent).toContain('向东实验室');
+    expect(compiled.querySelector('footer')?.textContent).toContain('相东实验室');
     expect(compiled.querySelector('main')?.id).toBe('main-content');
   });
 });

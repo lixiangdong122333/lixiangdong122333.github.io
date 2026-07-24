@@ -1,7 +1,7 @@
 import type { SiteConfig } from '../core/models/site';
 
 export const SITE_CONFIG = {
-  "name": "向东实验室",
+  "name": "相东实验室",
   "shortName": "XD Lab",
   "author": "Xiangdong Li",
   "displayName": "李相东",
