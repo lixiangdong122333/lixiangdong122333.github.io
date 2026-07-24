@@ -254,6 +254,7 @@ async function generateLucideSprite() {
     info: 'Info',
     layers: 'Layers3',
     link: 'Link',
+    mail: 'Mail',
     menu: 'Menu',
     moon: 'Moon',
     notebook: 'NotebookTabs',

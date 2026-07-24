@@ -43,6 +43,16 @@ import { PageIntro } from '../../shared/page-intro/page-intro';
             <app-icon name="github" />
             GitHub
           </a>
+          <a
+            pButton
+            [href]="'mailto:' + site.email"
+            [outlined]="true"
+            class="mt-3 h-12 w-full justify-start gap-2 border-2 px-5"
+            [attr.aria-label]="'发送邮件至 ' + site.email"
+          >
+            <app-icon name="mail" />
+            {{ site.email }}
+          </a>
         </div>
 
         <div class="max-w-3xl">
@@ -119,6 +129,7 @@ export class AboutPage {
         alternateName: SITE_CONFIG.displayName,
         url: `${SITE_CONFIG.siteUrl}/about/`,
         sameAs: [SITE_CONFIG.githubUrl],
+        email: SITE_CONFIG.email,
         jobTitle: SITE_CONFIG.role,
       },
     });

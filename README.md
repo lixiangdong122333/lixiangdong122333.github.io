@@ -124,6 +124,7 @@ PrimeNG 22 使用 PrimeUI 许可证体系。请从 [PrimeUI Community License](h
 | --------------------------------- | --------------------------------------------- |
 | `name` / `shortName`              | 站点全名与简称                                |
 | `author` / `displayName` / `role` | 作者资料                                      |
+| `email`                           | 公开联系邮箱                                  |
 | `description`                     | 默认 SEO 描述与 RSS 描述                      |
 | `siteUrl`                         | 本地构建时使用的生产站点 URL，不要以 `/` 结尾 |
 | `repository`                      | GitHub 仓库，格式为 `owner/repository`        |

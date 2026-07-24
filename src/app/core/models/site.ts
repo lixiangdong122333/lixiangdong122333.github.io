@@ -3,6 +3,7 @@ export interface SiteConfig {
   readonly shortName: string;
   readonly author: string;
   readonly displayName: string;
+  readonly email: string;
   readonly role: string;
   readonly description: string;
   readonly siteUrl: string;

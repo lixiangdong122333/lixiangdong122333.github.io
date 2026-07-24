@@ -19,6 +19,7 @@ export type IconName =
   | 'info'
   | 'layers'
   | 'link'
+  | 'mail'
   | 'menu'
   | 'moon'
   | 'notebook'
