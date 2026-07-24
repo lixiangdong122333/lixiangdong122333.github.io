@@ -1,0 +1,4 @@
+.playwright-cli/
+dist/
+output/
+src/app/generated/

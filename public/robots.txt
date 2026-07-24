@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lixiangdong122333.github.io/sitemap.xml

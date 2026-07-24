@@ -1,0 +1,15 @@
+import type { SiteConfig } from '../core/models/site';
+
+export const SITE_CONFIG = {
+  "name": "向东实验室",
+  "shortName": "XD Lab",
+  "author": "Xiangdong Li",
+  "displayName": "李向东",
+  "role": "Software Engineer",
+  "description": "记录软件工程、云原生与 AI 实践的个人空间。",
+  "siteUrl": "https://lixiangdong122333.github.io",
+  "repository": "lixiangdong122333/lixiangdong122333.github.io",
+  "githubUrl": "https://github.com/lixiangdong122333",
+  "githubUser": "lixiangdong122333",
+  "locale": "zh-CN"
+} as const satisfies SiteConfig;
