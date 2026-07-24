@@ -127,7 +127,7 @@ export class HomePage {
 
   constructor() {
     this.seo.update({
-      title: SITE_CONFIG.displayName,
+      title: SITE_CONFIG.name,
       description: SITE_CONFIG.description,
       path: '/',
       structuredData: {
