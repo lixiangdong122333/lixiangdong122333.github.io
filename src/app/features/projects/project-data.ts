@@ -43,15 +43,4 @@ export const PROJECTS: readonly Project[] = [
     highlights: ['组件化游戏机制', '依赖打包 JAR', 'Native Image 配置'],
     featured: true,
   },
-  {
-    name: 'SRS-docker',
-    description:
-      '使用 Docker Compose 编排 SRS 5 与 Nginx 的流媒体部署配置，包含 TLS、控制台、媒体路径和 API 反向代理规则。',
-    url: 'https://github.com/lixiangdong122333/SRS-docker',
-    stack: ['Docker Compose', 'SRS 5', 'Nginx', 'TLS', 'RTMP'],
-    language: 'Docker',
-    updatedAt: '2024-06-05',
-    highlights: ['SRS + Nginx 双服务', 'TLS / HTTP2', '媒体与 API 代理规则'],
-    featured: false,
-  },
 ];
