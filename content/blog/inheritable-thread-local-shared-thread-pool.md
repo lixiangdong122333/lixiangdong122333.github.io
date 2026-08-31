@@ -82,9 +82,22 @@ final class ContextA {
 
 普通 `ThreadLocal` 的值只属于当前线程。`InheritableThreadLocal` 在此基础上增加了一项能力：创建子线程时，子线程可以从父线程得到一个初始值。
 
-关键不是“可以继承”，而是“什么时候继承”。
+关键不是“可以继承”，而是 JDK 注释里反复限定的两个词：**创建**和**初始值**。
 
-根据 JDK 的定义，`childValue()` 会在子线程创建时根据父线程的当前值计算子线程初始值。默认实现只是把父线程的值原样返回：
+![InheritableThreadLocal 的 JDK 类注释与 childValue 方法注释](images/inheritable-thread-local-jdk-comment.png 'JDK 注释强调：继承发生在子线程创建时，得到的是一个初始值')
+
+类注释的第一段可以拆成四层意思：
+
+1. `InheritableThreadLocal` 扩展了 `ThreadLocal`，增加父线程到子线程的值继承；
+2. 触发继承的时机是 **a child thread is created**，也就是子线程被创建时；
+3. 子线程拿到的是 **initial values**，也就是自己那份线程本地变量的初始值；
+4. 默认情况下，子线程的值与父线程的值相同，也可以重写 `childValue()` 改变这个结果。
+
+这段话没有说“每次任务提交时传播”，也没有说“父线程的值变化后，子线程会自动同步”。继承只是线程出生时的一次初始化动作。初始化完成后，父子线程分别从自己的线程本地存储中取值。
+
+`childValue()` 的方法注释把时间点说得更具体：它使用 **the parent's value at the time the child thread is created** 计算子线程的初始值，而且是在父线程内部、子线程启动之前调用。
+
+默认实现没有复制逻辑，只是把入参原样返回：
 
 ```java
 protected T childValue(T parentValue) {
@@ -92,7 +105,9 @@ protected T childValue(T parentValue) {
 }
 ```
 
-如果保存的是一个可变 `Map`，父子线程最初拿到的甚至是同一个对象引用，而不是自动生成的副本。
+如果保存的是字符串、数字这类不可变值，父子线程初始内容相同；如果保存的是一个可变 `Map`，父子线程最初拿到的甚至是同一个对象引用，而不是自动生成的副本。重写 `childValue()` 可以制作副本，却仍然不能改变“只在线程创建时初始化一次”这个根本时机。
+
+这里还有一个容易被线程池 API 掩盖的概念：提交任务的请求线程，不等于 worker 的“父线程”。JDK 文档里的父子关系来自 `new Thread(...)` 的创建过程，而不是来自 `executor.execute(taskA)` 这次调用。任务只是进入队列，随后被某个已经存在的 worker 取走；任务从哪个线程提交，不会重新定义 worker 的父线程。
 
 这套机制用于生命周期明确的临时子线程时，看起来很方便：
 
@@ -120,9 +135,25 @@ protected T childValue(T parentValue) {
             └── worker-1 仍然持有用户 A
 ```
 
-请求线程调用 `remove()`，只能删除请求线程自己的 `ThreadLocal` 条目。它无法隔空清理另一个长期存活的 worker。
+把过程展开到 `childValue()` 的调用级别，问题会更直观：
+
+```text
+T0  请求 A 的线程设置上下文 A
+T1  线程池发现 worker 不足，创建 worker-1
+T2  创建过程中调用 childValue(A)，worker-1 得到初始值 A
+T3  请求 A 结束，只清理请求线程自己的上下文
+T4  请求 B 的线程设置上下文 B，并向线程池提交任务
+T5  worker-1 已经存在，因此不会再次创建线程，也不会再次调用 childValue(B)
+T6  worker-1 执行任务，从自己的线程本地存储中仍然读到 A
+```
+
+请求线程调用 `remove()`，只能删除请求线程自己的 `ThreadLocal` 条目。线程本地存储归线程所有，它无法隔空清理另一个长期存活的 worker。
 
 而线程池提交的是任务，不是新线程。任务 B 被放进队列，并不会触发一次新的 `InheritableThreadLocal` 继承。
+
+因此，真正出错的不是 `InheritableThreadLocal` 没有完成继承，而是它完全按照文档完成了继承：worker 在第一次创建时继承了 A，此后长期复用；业务代码却误以为每次提交任务时，它都会继承当前请求的 B、C、D。
+
+如果线程池预先在线程上下文为空的启动线程中创建全部 worker，现象可能变成“异步任务读不到身份”，而不是“读到其他身份”。这不会让设计变得安全，只说明错误表现取决于 worker 在何时、由哪个线程创建。
 
 ## 错误用户是怎样进入查询的
 
