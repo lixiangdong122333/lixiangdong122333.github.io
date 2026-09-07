@@ -49,7 +49,7 @@ import { Icon } from '../shared/icon/icon';
       </div>
       <div class="border-t-2 border-slate-200 dark:border-zinc-800">
         <div
-          class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-6 text-xs text-slate-500 sm:px-6 lg:px-8 dark:text-zinc-500"
+          class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-6 text-xs text-slate-500 sm:px-6 lg:px-8 dark:text-zinc-400"
         >
           <span>© {{ currentYear }} {{ site.author }}. 内容与代码同源。</span>
           <div class="flex items-center gap-4">

@@ -98,11 +98,38 @@ function rehypeRouteFragmentLinks(route) {
   };
 }
 
+function rehypeTaskListLabels() {
+  return (tree) => {
+    visit(tree, 'element', (node) => {
+      if (node.tagName !== 'li' || !Array.isArray(node.properties?.className)) {
+        return;
+      }
+      if (!node.properties.className.includes('task-list-item')) {
+        return;
+      }
+
+      const firstChild = node.children?.[0];
+      if (
+        firstChild?.type !== 'element' ||
+        firstChild.tagName !== 'input' ||
+        firstChild.properties?.type !== 'checkbox'
+      ) {
+        return;
+      }
+
+      node.children = [
+        { type: 'element', tagName: 'label', properties: {}, children: node.children },
+      ];
+    });
+  };
+}
+
 function createHtmlCompiler(route) {
   return unified()
     .use(remarkRehype)
     .use(rehypeSlug)
     .use(rehypeSanitize)
+    .use(rehypeTaskListLabels)
     .use(rehypeMermaidBlocks)
     .use(rehypeKatex)
     .use(rehypeHighlight, { detect: false })

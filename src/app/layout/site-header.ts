@@ -49,6 +49,8 @@ interface NavigationItem {
               [routerLink]="item.path"
               routerLinkActive="bg-slate-100 text-slate-950 dark:bg-zinc-800 dark:text-white"
               [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+              #rla="routerLinkActive"
+              [attr.aria-current]="rla.isActive ? 'page' : null"
               class="flex h-10 items-center rounded-lg px-3 text-sm font-medium tracking-normal text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-white"
             >
               {{ item.label }}
@@ -110,6 +112,8 @@ interface NavigationItem {
             [routerLink]="item.path"
             routerLinkActive="bg-emerald-50 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200"
             [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+            #rla="routerLinkActive"
+            [attr.aria-current]="rla.isActive ? 'page' : null"
             class="flex h-12 items-center justify-between rounded-lg px-4 font-medium tracking-normal text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-zinc-200"
             (click)="menuOpen.set(false)"
           >

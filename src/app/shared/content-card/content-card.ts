@@ -40,7 +40,7 @@ const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
       <p class="mt-3 flex-1 text-sm leading-6 text-slate-600 dark:text-zinc-300">
         {{ document().excerpt }}
       </p>
-      <div class="mt-6 flex flex-wrap items-center gap-4 text-xs text-slate-500 dark:text-zinc-500">
+      <div class="mt-6 flex flex-wrap items-center gap-4 text-xs text-slate-500 dark:text-zinc-400">
         <span class="inline-flex items-center gap-2">
           <app-icon name="calendar" size="sm" />
           {{ formatDate(document().publishedAt) }}

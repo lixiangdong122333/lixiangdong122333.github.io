@@ -8,6 +8,19 @@ export const APP_THEME_PRESET = definePreset(Aura, {
     },
   },
   semantic: {
+    primary: {
+      50: '{emerald.50}',
+      100: '{emerald.100}',
+      200: '{emerald.200}',
+      300: '{emerald.300}',
+      400: '{emerald.400}',
+      500: '{emerald.700}',
+      600: '{emerald.800}',
+      700: '{emerald.800}',
+      800: '{emerald.900}',
+      900: '{emerald.900}',
+      950: '{emerald.950}',
+    },
     focusRing: {
       width: '2px',
     },

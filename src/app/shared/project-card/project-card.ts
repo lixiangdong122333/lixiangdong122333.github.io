@@ -46,7 +46,7 @@ import { Icon } from '../icon/icon';
       <div
         class="mt-6 flex items-center justify-between gap-4 border-t-2 border-slate-100 pt-4 dark:border-zinc-800"
       >
-        <span class="text-xs text-slate-500 dark:text-zinc-500"
+        <span class="text-xs text-slate-500 dark:text-zinc-400"
           >更新于 {{ project().updatedAt }}</span
         >
         <a

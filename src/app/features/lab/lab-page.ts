@@ -180,9 +180,10 @@ export function calculateContrastRatio(foreground: string, background: string): 
                   [min]="300"
                   [max]="6000"
                   [step]="100"
+                  ariaLabel="内容长度（字）"
                   class="mt-10 block"
                 />
-                <div class="mt-4 flex justify-between text-xs text-slate-500 dark:text-zinc-500">
+                <div class="mt-4 flex justify-between text-xs text-slate-500 dark:text-zinc-400">
                   <span>300</span><span>6000</span>
                 </div>
               </div>
