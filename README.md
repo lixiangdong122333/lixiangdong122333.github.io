@@ -20,6 +20,7 @@
 - 实验室：可交互的技术实验与原型
 - 知识库：按主题整理的长期知识条目
 - 关于我：个人经历、技术方向与联系方式
+- 友情链接：集中管理并展示站点间的互推链接
 - SEO：预渲染页面、RSS、`sitemap.xml`、`robots.txt` 和页面级元数据
 
 ## 内容目录
@@ -29,15 +30,17 @@
 ```text
 content/
 ├── blog/          # 博客文章
-└── knowledge/     # 知识库条目
+├── knowledge/     # 知识库条目
+└── links.json     # 友情链接清单
 
 public/
 └── images/        # Markdown 引用的本地图片
 ```
 
-运行内容构建后会生成以下文件，请把 Markdown 作为源数据维护，不要直接修改生成结果：
+运行内容构建后会生成以下文件，请把 Markdown 与 `links.json` 作为源数据维护，不要直接修改生成结果：
 
 - `src/app/generated/content.generated.ts`：页面渲染、检索、标签和预渲染共用的内容清单
+- `src/app/generated/links.generated.ts`：友情链接页面使用的链接清单
 - `public/rss.xml`：已发布博客文章的 RSS 订阅源
 - `public/sitemap.xml`：静态页面与已发布内容的站点地图
 - `public/robots.txt`：搜索引擎抓取规则
@@ -81,6 +84,30 @@ draft: false
 ```
 
 Mermaid 图使用语言标识为 `mermaid` 的 fenced code block；行内公式使用 `$...$`，块级公式使用 `$$...$$`。原始 HTML 默认关闭，生成内容会经过清理后再应用代码高亮、KaTeX 与 Mermaid 增强。
+
+## 友情链接
+
+友情链接集中管理在 `content/links.json`，由内容构建校验后生成 `/links/` 页面。新增或调整友链只需编辑该文件并重新构建，字段约束如下：
+
+```json
+{
+  "name": "DataNexa",
+  "url": "https://mingozacwu.github.io/datanexa-site/",
+  "description": "面向 AI Agent 的本地只读数据库 MCP 网关。",
+  "author": "Zachary Wu",
+  "tags": ["MCP", "AI Agent", "数据库"]
+}
+```
+
+| 字段          | 必填 | 说明                                 |
+| ------------- | ---- | ------------------------------------ |
+| `name`        | 是   | 站点名称，2 至 40 个字符，且不能重复 |
+| `url`         | 是   | 站点地址，必须是合法的绝对 URL       |
+| `description` | 是   | 20 至 160 个字符的站点描述           |
+| `author`      | 否   | 站点作者，2 至 40 个字符             |
+| `tags`        | 否   | 最多 4 个主题标签                    |
+
+SEO 方面的处理：`/links/` 页面会被预渲染并加入 `sitemap.xml`，提供独立的标题、描述、Canonical、Open Graph 元数据与 `ItemList` 结构化数据；外链使用 `rel="noopener noreferrer"` 与描述性锚文本，不在页面上堆砌无关链接。
 
 ## 本地开发
 

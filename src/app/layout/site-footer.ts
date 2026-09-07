@@ -40,6 +40,11 @@ import { Icon } from '../shared/icon/icon';
             class="text-slate-600 hover:text-emerald-700 dark:text-zinc-400 dark:hover:text-emerald-300"
             >关于</a
           >
+          <a
+            routerLink="/links"
+            class="text-slate-600 hover:text-emerald-700 dark:text-zinc-400 dark:hover:text-emerald-300"
+            >友情链接</a
+          >
         </nav>
       </div>
       <div class="border-t-2 border-slate-200 dark:border-zinc-800">

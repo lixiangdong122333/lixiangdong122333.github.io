@@ -44,6 +44,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/about/about-page').then((module) => module.AboutPage),
   },
   {
+    path: 'links',
+    loadComponent: () => import('./features/links/links-page').then((module) => module.LinksPage),
+  },
+  {
     path: '404',
     loadComponent: () =>
       import('./features/not-found/not-found-page').then((module) => module.NotFoundPage),

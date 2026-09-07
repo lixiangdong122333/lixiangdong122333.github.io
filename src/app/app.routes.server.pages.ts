@@ -19,5 +19,6 @@ export const serverRoutes: ServerRoute[] = [
       return KNOWLEDGE_ENTRY_SLUGS.map((slug) => ({ slug }));
     },
   },
+  { path: 'links', renderMode: RenderMode.Prerender },
   { path: '**', renderMode: RenderMode.Prerender },
 ];

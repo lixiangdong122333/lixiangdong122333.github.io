@@ -48,6 +48,18 @@ const frontmatterSchema = z
   })
   .strict();
 
+const friendLinkSchema = z
+  .object({
+    name: z.string().min(2).max(40),
+    url: z.string().url(),
+    description: z.string().min(20).max(160),
+    author: z.string().min(2).max(40).optional(),
+    tags: z.array(z.string().min(1)).max(4).default([]),
+  })
+  .strict();
+
+const friendLinksFileSchema = z.object({ links: z.array(friendLinkSchema).min(1) }).strict();
+
 const markdownParser = unified().use(remarkParse).use(remarkGfm).use(remarkMath);
 
 function rehypeMermaidBlocks() {
@@ -334,7 +346,21 @@ if (duplicateIds.length > 0) {
   throw new Error(`Duplicate content id: ${duplicateIds[0].id}`);
 }
 
+const friendLinksSource = await readFile(path.join(contentDirectory, 'links.json'), 'utf8');
+const friendLinks = friendLinksFileSchema.parse(JSON.parse(friendLinksSource)).links;
+const duplicateLinkNames = friendLinks.filter(
+  (link, index) => friendLinks.findIndex((candidate) => candidate.name === link.name) !== index,
+);
+if (duplicateLinkNames.length > 0) {
+  throw new Error(`Duplicate friend link name: ${duplicateLinkNames[0].name}`);
+}
+
 await mkdir(generatedDirectory, { recursive: true });
+await writeFile(
+  path.join(generatedDirectory, 'links.generated.ts'),
+  `import type { FriendLink } from '../core/models/friend-link';\n\nexport const FRIEND_LINKS = ${serialize(friendLinks)} as const satisfies readonly FriendLink[];\n`,
+  'utf8',
+);
 await writeFile(
   path.join(generatedDirectory, 'content.generated.ts'),
   `import type { ContentDocument } from '../core/models/content';\n\nexport const CONTENT_DOCUMENTS = ${serialize(publishedDocuments)} as const satisfies readonly ContentDocument[];\n\nexport const BLOG_POST_SLUGS = ${serialize(publishedDocuments.filter((document) => document.kind === 'blog').map((document) => document.slug))} as const;\n\nexport const KNOWLEDGE_ENTRY_SLUGS = ${serialize(publishedDocuments.filter((document) => document.kind === 'knowledge').map((document) => document.slug))} as const;\n`,
@@ -351,7 +377,7 @@ await writeFile(
   'utf8',
 );
 
-const staticRoutes = ['', '/blog/', '/projects/', '/lab/', '/knowledge/', '/about/'];
+const staticRoutes = ['', '/blog/', '/projects/', '/lab/', '/knowledge/', '/about/', '/links/'];
 const contentRoutes = publishedDocuments.map((document) => `/${document.kind}/${document.slug}/`);
 const urls = [...staticRoutes, ...contentRoutes];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls

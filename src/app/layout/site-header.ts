@@ -132,5 +132,6 @@ export class SiteHeader {
     { label: '实验室', path: '/lab' },
     { label: '知识库', path: '/knowledge' },
     { label: '关于我', path: '/about' },
+    { label: '友情链接', path: '/links' },
   ];
 }

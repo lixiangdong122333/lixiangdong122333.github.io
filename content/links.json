@@ -1,0 +1,11 @@
+{
+  "links": [
+    {
+      "name": "DataNexa",
+      "url": "https://mingozacwu.github.io/datanexa-site/",
+      "description": "面向 AI Agent 的本地只读数据库 MCP 网关：通过 SQL 语法树级只读校验、系统密钥串凭证存储、资源限制与本地审计日志，让 Agent 安全地连接 SQLite、MySQL 与 PostgreSQL。",
+      "author": "Zachary Wu",
+      "tags": ["MCP", "AI Agent", "数据库"]
+    }
+  ]
+}
