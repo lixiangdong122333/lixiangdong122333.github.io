@@ -25,7 +25,7 @@ import { PageIntro } from '../../shared/page-intro/page-intro';
           @for (link of links; track link.url) {
             <li>
               <article
-                class="flex h-full flex-col rounded-lg border-2 border-slate-200 bg-white p-6 transition-colors hover:border-emerald-400 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-emerald-700"
+                class="relative flex h-full flex-col rounded-lg border-2 border-slate-200 bg-white p-6 transition-colors hover:border-emerald-400 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-emerald-700"
               >
                 <div class="flex items-start justify-between gap-4">
                   <h2 class="text-xl font-semibold tracking-normal text-slate-950 dark:text-white">
@@ -33,7 +33,7 @@ import { PageIntro } from '../../shared/page-intro/page-intro';
                       [href]="link.url"
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="rounded-lg transition-colors hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:hover:text-emerald-300"
+                      class="rounded-lg transition-colors after:absolute after:inset-0 after:rounded-lg hover:text-emerald-700 focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-emerald-500 dark:hover:text-emerald-300"
                       >{{ link.name }}</a
                     >
                   </h2>
