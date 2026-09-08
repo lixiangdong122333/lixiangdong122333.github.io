@@ -1,4 +1,4 @@
-import { calculateContrastRatio } from './lab-page';
+import { calculateContrastRatio } from './tools/contrast-tool';
 
 describe('calculateContrastRatio', () => {
   it('returns the WCAG maximum ratio for black and white', () => {
