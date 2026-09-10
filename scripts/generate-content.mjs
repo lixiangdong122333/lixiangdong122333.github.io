@@ -18,6 +18,7 @@ import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 import { visit } from 'unist-util-visit';
 import { z } from 'zod';
+import { TOOL_DEFINITIONS } from '../src/app/features/lab/tool-catalog.ts';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const contentDirectory = path.join(root, 'content');
@@ -301,6 +302,7 @@ async function generateLucideSprite() {
     rss: 'Rss',
     search: 'Search',
     server: 'ServerCog',
+    star: 'Star',
     sun: 'Sun',
     tag: 'Tag',
     terminal: 'Terminal',
@@ -406,7 +408,8 @@ await writeFile(
 
 const staticRoutes = ['', '/blog/', '/projects/', '/lab/', '/knowledge/', '/about/', '/links/'];
 const contentRoutes = publishedDocuments.map((document) => `/${document.kind}/${document.slug}/`);
-const urls = [...staticRoutes, ...contentRoutes];
+const toolRoutes = TOOL_DEFINITIONS.map((tool) => `/lab/${tool.id}/`);
+const urls = [...staticRoutes, ...contentRoutes, ...toolRoutes];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
   .map((route) => {
     const document = publishedDocuments.find((item) => `/${item.kind}/${item.slug}/` === route);

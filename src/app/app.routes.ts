@@ -28,6 +28,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/lab/lab-page').then((module) => module.LabPage),
   },
   {
+    path: 'lab/:toolId',
+    loadComponent: () => import('./features/lab/lab-page').then((module) => module.LabPage),
+  },
+  {
     path: 'knowledge',
     loadComponent: () =>
       import('./features/content/content-list-page').then((module) => module.ContentListPage),

@@ -1,6 +1,7 @@
 import { PrerenderFallback, RenderMode, ServerRoute } from '@angular/ssr';
 
 import { BLOG_POST_SLUGS, KNOWLEDGE_ENTRY_SLUGS } from './generated/content.generated';
+import { LAB_TOOLS } from './features/lab/tool-registry';
 
 export const serverRoutes: ServerRoute[] = [
   { path: '', renderMode: RenderMode.Prerender },
@@ -15,6 +16,14 @@ export const serverRoutes: ServerRoute[] = [
   },
   { path: 'projects', renderMode: RenderMode.Prerender },
   { path: 'lab', renderMode: RenderMode.Prerender },
+  {
+    path: 'lab/:toolId',
+    renderMode: RenderMode.Prerender,
+    fallback: PrerenderFallback.Server,
+    async getPrerenderParams() {
+      return LAB_TOOLS.map(({ id }) => ({ toolId: id }));
+    },
+  },
   { path: 'knowledge', renderMode: RenderMode.Prerender },
   {
     path: 'knowledge/:slug',

@@ -27,6 +27,7 @@ export type IconName =
   | 'rss'
   | 'search'
   | 'server'
+  | 'star'
   | 'sun'
   | 'tag'
   | 'terminal'
