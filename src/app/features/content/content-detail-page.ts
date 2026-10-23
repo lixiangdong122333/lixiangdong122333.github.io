@@ -84,7 +84,7 @@ const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
           @for (block of entry.blocks; track $index) {
             @if (block.kind === 'html') {
               <div
-                class="prose prose-slate max-w-none prose-headings:tracking-normal prose-a:text-emerald-700 prose-a:decoration-2 prose-pre:rounded-lg prose-pre:border-2 prose-pre:border-zinc-700 dark:prose-invert dark:prose-a:text-emerald-300 [&_.mermaid]:my-8 [&_.mermaid]:overflow-x-auto [&_.mermaid]:rounded-lg [&_.mermaid]:border-2 [&_.mermaid]:border-slate-200 [&_.mermaid]:bg-white [&_.mermaid]:p-4 [&_.mermaid_svg]:mx-auto [&_.mermaid_svg]:max-w-full dark:[&_.mermaid]:border-zinc-700 dark:[&_.mermaid]:bg-zinc-900"
+                class="prose prose-slate max-w-none prose-headings:tracking-normal prose-a:text-emerald-700 prose-a:decoration-2 prose-pre:rounded-lg prose-pre:border-2 prose-pre:border-zinc-700 dark:prose-invert dark:prose-a:text-emerald-300 [&_code:not(pre_code)]:before:content-none [&_code:not(pre_code)]:after:content-none [&_code:not(pre_code)]:rounded [&_code:not(pre_code)]:bg-slate-100 [&_code:not(pre_code)]:px-1 [&_code:not(pre_code)]:py-0.5 [&_code:not(pre_code)]:font-normal dark:[&_code:not(pre_code)]:bg-zinc-800 [&_.mermaid]:my-8 [&_.mermaid]:overflow-x-auto [&_.mermaid]:rounded-lg [&_.mermaid]:border-2 [&_.mermaid]:border-slate-200 [&_.mermaid]:bg-white [&_.mermaid]:p-4 [&_.mermaid_svg]:mx-auto [&_.mermaid_svg]:max-w-full dark:[&_.mermaid]:border-zinc-700 dark:[&_.mermaid]:bg-zinc-900"
                 [innerHTML]="renderCompiledHtml(block.html)"
               ></div>
             } @else {
