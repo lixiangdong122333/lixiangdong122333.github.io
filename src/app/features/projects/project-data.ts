@@ -11,6 +11,17 @@ export interface Project {
 
 export const PROJECTS: readonly Project[] = [
   {
+    name: 'dsh-notify',
+    description:
+      'DeepSeek-Harness 的 Windows 桌面通知插件：任务结束或智能体需要你确认时弹出通知，点击通知直接回到应用，并自带 DSH 内的设置页。',
+    url: 'https://github.com/lixiangdong122333/dsh-notify',
+    stack: ['JavaScript', 'Node.js', 'Cordis', 'WinRT', 'GitHub Actions'],
+    language: 'JavaScript',
+    updatedAt: '2026-10-23',
+    highlights: ['已发布至 npm 的 DSH 插件', '通知点击唤回应用窗口', 'DSH 设置面板内独立配置页'],
+    featured: true,
+  },
+  {
     name: 'Helios',
     description:
       '面向服务监控和故障排查的只读 Google Cloud Logging MCP Server，支持日志查询、Trace 关联、确定性摘要和异常聚合。',

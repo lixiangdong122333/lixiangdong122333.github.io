@@ -94,7 +94,7 @@ import { PROJECTS } from '../projects/project-data';
             <div>
               <p class="text-sm font-semibold text-amber-700 dark:text-amber-300">公开项目</p>
               <h2 class="mt-3 text-3xl font-bold tracking-normal text-slate-950 dark:text-white">
-                从工具到可视化实验
+                从插件到可视化实验
               </h2>
             </div>
             <a

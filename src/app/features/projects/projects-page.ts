@@ -13,7 +13,7 @@ import { PROJECTS } from './project-data';
     <app-page-intro
       eyebrow="GitHub Projects"
       title="公开项目与工程实验"
-      description="从生产可观测工具到 GPU 群集模拟，覆盖服务、图形、游戏机制与流媒体部署。"
+      description="从 AI 开发者的日常工作流到生产可观测工具，覆盖插件、服务、图形与游戏机制。"
       icon="github"
     />
     <section class="bg-white dark:bg-zinc-950">
@@ -37,7 +37,7 @@ export class ProjectsPage {
     inject(SeoService).update({
       title: 'GitHub 项目',
       description:
-        '李相东的公开项目：云日志 MCP Server、GPU 群集模拟、FXGL 游戏机制原型与流媒体部署配置。',
+        '李相东的公开项目：DeepSeek-Harness 桌面通知插件、云日志 MCP Server、GPU 群集模拟与 FXGL 游戏机制原型。',
       path: '/projects/',
     });
   }
