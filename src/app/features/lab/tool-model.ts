@@ -13,6 +13,10 @@ export interface ToolResult {
   text: string;
   changes?: { value: string; added: boolean; removed: boolean }[];
   preview?: { foreground: string; background: string };
+  /** HTML flavor written to the clipboard as text/html, alongside text/plain. */
+  richText?: string;
+  /** Plain flavor paired with richText; the output text is used when absent. */
+  plainText?: string;
 }
 export type ToolProcessor = (
   values: Readonly<Record<string, string>>,

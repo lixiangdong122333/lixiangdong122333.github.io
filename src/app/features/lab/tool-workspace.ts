@@ -143,6 +143,18 @@ import type { LabTool, ToolResult } from './tool-model';
           Aa 文字示例
         </div>
       }
+      @if (result()?.richText; as richText) {
+        <section class="mt-8" aria-labelledby="rich-preview-heading">
+          <h2 id="rich-preview-heading" class="mb-2 text-sm font-semibold">富文本预览</h2>
+          <div
+            class="prose prose-slate max-w-none rounded-lg border-2 border-slate-300 bg-white p-6 [&_code:not(pre_code)]:before:content-none [&_code:not(pre_code)]:after:content-none [&_code:not(pre_code)]:rounded [&_code:not(pre_code)]:bg-slate-100 [&_code:not(pre_code)]:px-1 [&_code:not(pre_code)]:py-0.5 [&_code:not(pre_code)]:font-normal dark:prose-invert dark:border-zinc-700 dark:bg-zinc-900 dark:[&_code:not(pre_code)]:bg-zinc-800"
+            [innerHTML]="richText"
+          ></div>
+          <p class="mt-2 text-sm text-slate-600 dark:text-zinc-400">
+            复制后粘贴到 Confluence，会按上面的格式插入；输出框里是等价的 HTML 源码。
+          </p>
+        </section>
+      }
     </div>
   `,
 })
@@ -197,10 +209,34 @@ export class ToolWorkspace {
     if (!result) return;
     const revision = this.revision;
     try {
-      await navigator.clipboard.writeText(result.text);
+      await this.writeClipboard(result);
       if (revision === this.revision) this.copied.set(true);
+    } catch (error: unknown) {
+      if (revision === this.revision)
+        this.error.set(
+          error instanceof Error ? error.message : '无法访问剪贴板，请从输出框手动复制。',
+        );
+    }
+  }
+
+  private async writeClipboard(result: ToolResult): Promise<void> {
+    const plain = result.plainText ?? result.text;
+    if (!result.richText) {
+      await navigator.clipboard.writeText(plain);
+      return;
+    }
+    const Item = globalThis.ClipboardItem;
+    if (!Item || typeof navigator.clipboard.write !== 'function')
+      throw new Error('当前浏览器不支持写入富文本剪贴板，请改用 Chrome 或 Edge。');
+    try {
+      await navigator.clipboard.write([
+        new Item({
+          'text/html': new Blob([result.richText], { type: 'text/html' }),
+          'text/plain': new Blob([plain], { type: 'text/plain' }),
+        }),
+      ]);
     } catch {
-      if (revision === this.revision) this.error.set('无法访问剪贴板，请从输出框手动复制。');
+      throw new Error('浏览器拒绝了富文本剪贴板写入，请改用 Chrome 或 Edge，或从输出框手动复制。');
     }
   }
 

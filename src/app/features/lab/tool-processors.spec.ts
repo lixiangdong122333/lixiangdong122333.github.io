@@ -8,6 +8,7 @@ import {
   json,
   jsonDiff,
   jwt,
+  markdown,
   parseInstant,
   sql,
   textDiff,
@@ -129,5 +130,66 @@ describe('local tool processors', () => {
   it('counts Unicode characters and empty text', async () => {
     expect((await wordCount({ input: '你好' }, '')).text).toContain('字符: 2');
     expect((await wordCount({ input: '' }, '')).text).toContain('行数: 0');
+  });
+  it('converts Markdown into the semantic HTML a rich-text editor pastes', async () => {
+    const result = await markdown(
+      {
+        input: [
+          '# 标题',
+          '',
+          '正文 **粗体** 与 `代码`。',
+          '',
+          '- 一',
+          '- 二',
+          '',
+          '| 列 | 值 |',
+          '| -- | -- |',
+          '| a | 1 |',
+          '',
+          '```java',
+          'int a = 1;',
+          '```',
+        ].join('\n'),
+      },
+      'convert',
+    );
+    expect(result.richText).toBe(result.text);
+    expect(result.text).toContain('<h1>标题</h1>');
+    expect(result.text).toContain('<strong>粗体</strong>');
+    expect(result.text).toContain('<code>代码</code>');
+    expect(result.text).toContain('<li>一</li>');
+    expect(result.text).toContain('<table>');
+    expect(result.text).toContain('<th>列</th>');
+    expect(result.text).toContain('<pre><code class="language-java">');
+  });
+  it('keeps the Markdown source as the plain clipboard flavor', async () => {
+    const source = '# 标题\n\n正文';
+    expect((await markdown({ input: source }, 'convert')).plainText).toBe(source);
+  });
+  it('escapes raw HTML instead of letting it through', async () => {
+    const result = await markdown(
+      { input: '<script>alert(1)</script>\n\ntext <b>inline</b>' },
+      'convert',
+    );
+    expect(result.text).not.toContain('<script>');
+    expect(result.text).toContain('&lt;script&gt;');
+    expect(result.text).toContain('&lt;b&gt;inline&lt;/b&gt;');
+  });
+  it('drops link and image targets that could execute script', async () => {
+    const result = await markdown(
+      { input: '[坏](javascript:alert(1)) ![坏图](javascript:x) [好](https://ok.com)' },
+      'convert',
+    );
+    expect(result.text).not.toContain('javascript:');
+    expect(result.text).toContain('href="https://ok.com"');
+    expect(result.text).toContain('坏');
+  });
+  it('keeps inline formatting nested inside a link', async () => {
+    expect((await markdown({ input: '[**粗体**](https://ok.com)' }, 'convert')).text).toContain(
+      '<a href="https://ok.com"><strong>粗体</strong></a>',
+    );
+  });
+  it('rejects empty Markdown input', async () => {
+    await expect(Promise.resolve(markdown({ input: '   ' }, 'convert'))).rejects.toThrow();
   });
 });

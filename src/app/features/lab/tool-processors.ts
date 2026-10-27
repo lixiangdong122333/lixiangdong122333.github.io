@@ -1,5 +1,6 @@
 import { colord } from 'colord';
 import { diffJson, diffLines, type Change } from 'diff';
+import { markdownToRichText } from './markdown-rich-text';
 import type { ToolProcessor, ToolResult } from './tool-model';
 
 export const json: ToolProcessor = (values, action) => {
@@ -211,4 +212,10 @@ export const wordCount: ToolProcessor = (values) => {
   return {
     text: `字符: ${characters}\n非空白字符: ${[...text.replace(/\s/g, '')].length}\n词数: ${words}\n行数: ${text ? text.split(/\r?\n/).length : 0}\n预计阅读: ${text.trim() ? Math.max(1, Math.ceil(words / 200)) : 0} 分钟`,
   };
+};
+export const markdown: ToolProcessor = async (values) => {
+  const source = values['input'];
+  if (!source.trim()) throw new Error('请输入 Markdown 内容。');
+  const richText = await markdownToRichText(source);
+  return { text: richText, richText, plainText: source };
 };

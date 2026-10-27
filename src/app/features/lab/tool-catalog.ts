@@ -8,6 +8,7 @@ export type ToolProcessorName =
   | 'json'
   | 'jsonDiff'
   | 'jwt'
+  | 'markdown'
   | 'sql'
   | 'textDiff'
   | 'timestamp'
@@ -91,6 +92,19 @@ export const TOOL_DEFINITIONS: ToolDefinition[] = [
     [field('input', '原始 JSON'), field('second', '新的 JSON')],
     [{ id: 'process', label: '比较' }],
     ['json', 'diff', '对比'],
+  ),
+  base(
+    'markdown',
+    'Markdown to Rich Text',
+    'Markdown 转富文本',
+    '把 Markdown 转成带格式的富文本，复制后可直接粘贴进 Confluence 等富文本编辑器。',
+    'Text',
+    'notebook',
+    'markdown',
+    [field('input', 'Markdown 内容', 'textarea', '# 标题 与 **粗体**、`行内代码`、- 列表')],
+    [{ id: 'convert', label: '转换' }],
+    ['markdown', 'md', '富文本', 'richtext', 'confluence', 'html', '粘贴'],
+    true,
   ),
   base(
     'text-diff',
